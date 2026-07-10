@@ -2,7 +2,7 @@
 Repository for our submission to the GMTK gamejam 2026
 
 ## Git guide
-- use `git add .` to start tracking new files
+- use `git add .` to track changed files
 	- untracked files wont be saved when using `git commit`
 - use `git rm ` to remove a file 
 - use `git commit -m ""` to save all changes with a message
