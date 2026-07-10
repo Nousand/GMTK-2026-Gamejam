@@ -13,3 +13,4 @@ Repository for our submission to the GMTK gamejam 2026
 
 [Worth looking at](https://dev.to/colocodes/learn-how-to-use-git-and-github-in-a-team-like-a-pro-2dk7)
 
+[For a more friendly interface use Lazygit](https://github.com/jesseduffield/lazygit)
