@@ -1,0 +1,84 @@
+[gd_scene format=3 uid="uid://cnwq5a2it6231"]
+
+[ext_resource type="Script" uid="uid://cptnxrruptu08" path="res://Nanda/bell.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://8l4fagpbq7jp" path="res://Assets/861264__silverillusionist__horror-sting-toll-for-the-dead.wav" id="2"]
+[ext_resource type="Texture2D" uid="uid://bom62lucp0vdg" path="res://Assets/bells.png" id="3"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(60, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stand"]
+atlas = ExtResource("3")
+region = Rect2(6, 65, 116, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aura"]
+atlas = ExtResource("3")
+region = Rect2(133, 59, 118, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bell"]
+atlas = ExtResource("3")
+region = Rect2(5, 2, 22, 28)
+
+[sub_resource type="Animation" id="Animation_p2bmb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BellSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.43633232]
+}
+
+[sub_resource type="Animation" id="Animation_3eddv"]
+resource_name = "swing"
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BellSprite:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.10269565, 0.20122796, 0.30114806, 0.4038437, 0.49821267),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.43633232, -0.34906584, 0.20943952, -0.10471976, 0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ia780"]
+_data = {
+&"RESET": SubResource("Animation_p2bmb"),
+&"swing": SubResource("Animation_3eddv")
+}
+
+[node name="Bell" type="Area2D" unique_id=384589248]
+z_index = -1
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=299060091]
+shape = SubResource("RectangleShape2D_trigger")
+
+[node name="Aura" type="Sprite2D" parent="." unique_id=3921004411]
+modulate = Color(1, 1, 1, 0)
+texture = SubResource("AtlasTexture_aura")
+
+[node name="Stand" type="Sprite2D" parent="." unique_id=1157270406]
+texture = SubResource("AtlasTexture_stand")
+
+[node name="BellSprite" type="Sprite2D" parent="." unique_id=1484701166]
+position = Vector2(0, -48)
+texture = SubResource("AtlasTexture_bell")
+offset = Vector2(0, 14)
+
+[node name="SwingAnimation" type="AnimationPlayer" parent="." unique_id=2051400984]
+libraries/ = SubResource("AnimationLibrary_ia780")
+
+[node name="CountdownTimer" type="Timer" parent="." unique_id=70517434]
+
+[node name="RingSound" type="AudioStreamPlayer2D" parent="." unique_id=1424953959]
+stream = ExtResource("2")
