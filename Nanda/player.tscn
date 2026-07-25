@@ -206,6 +206,7 @@ func _process(delta: float) -> void:
 "
 
 [node name="Player" type="CharacterBody2D" unique_id=1356872272]
+safe_margin = 0.001
 script = ExtResource("1_dix8h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=42216263]

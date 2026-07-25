@@ -4,23 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://cnwq5a2it6231" path="res://Nanda/bell.tscn" id="2_bell"]
 [ext_resource type="Script" uid="uid://bq18uu1bfbrb" path="res://Nanda/countdown_label.gd" id="3_label"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
-size = Vector2(800, 40)
-
 [node name="PlayerTest" type="Node2D" unique_id=1218194307]
-
-[node name="Floor" type="StaticBody2D" parent="." unique_id=1140487644]
-position = Vector2(576, 550)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1529189812]
-shape = SubResource("RectangleShape2D_floor")
-
-[node name="Visual" type="ColorRect" parent="Floor" unique_id=1127992681]
-offset_left = -400.0
-offset_top = -20.0
-offset_right = 400.0
-offset_bottom = 20.0
-color = Color(0.35, 0.25, 0.15, 1)
 
 [node name="Player" parent="." unique_id=1356872272 instance=ExtResource("1_g4662")]
 position = Vector2(200, 400)
