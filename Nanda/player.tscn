@@ -222,4 +222,5 @@ animation = &"Attack"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=621599326]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 script = SubResource("GDScript_dix8h")

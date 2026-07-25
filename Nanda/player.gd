@@ -79,6 +79,10 @@ func _physics_process(delta: float) -> void:
 		)
 	else:
 		camera.offset = Vector2.ZERO
+		
+	# Die if below 800
+	if global_position.y > 1000:
+		die()
 
 func die() -> void:
 	if player_dead:
