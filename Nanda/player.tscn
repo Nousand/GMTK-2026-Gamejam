@@ -230,6 +230,7 @@ func _process(delta: float) -> void:
 "
 
 [node name="Player" type="CharacterBody2D" unique_id=1356872272]
+safe_margin = 0.001
 script = ExtResource("1_dix8h")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=42216263]
@@ -245,6 +246,7 @@ animation = &"Attack"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=621599326]
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
+position_smoothing_speed = 8.0
 script = SubResource("GDScript_dix8h")
 
 [node name="AttackHitbox" type="Area2D" parent="."]
