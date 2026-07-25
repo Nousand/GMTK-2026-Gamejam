@@ -1,23 +1,23 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene format=3 uid="uid://qg33jwem77ta"]
 
-[ext_resource type="Script" path="res://scripts/game.gd" id="1"]
-[ext_resource type="Script" path="res://scripts/player.gd" id="2"]
+[ext_resource type="Script" uid="uid://ctx6xlhwehmc6" path="res://scripts/game.gd" id="1"]
+[ext_resource type="Script" uid="uid://d27jt5v08q7wi" path="res://scripts/player.gd" id="2"]
 
-[node name="Game" type="Node2D"]
+[node name="Game" type="Node2D" unique_id=1103779433]
 script = ExtResource("1")
 
-[node name="Player" type="Node2D" parent="."]
+[node name="Player" type="Node2D" parent="." unique_id=335316379]
 position = Vector2(576, 324)
 script = ExtResource("2")
 
-[node name="Body" type="ColorRect" parent="Player"]
+[node name="Body" type="ColorRect" parent="Player" unique_id=1351731798]
 offset_left = -16.0
 offset_top = -16.0
 offset_right = 16.0
 offset_bottom = 16.0
 color = Color(0.2, 0.7, 1, 1)
 
-[node name="ScoreLabel" type="Label" parent="."]
+[node name="ScoreLabel" type="Label" parent="." unique_id=2076467531]
 offset_left = 20.0
 offset_top = 20.0
 offset_right = 220.0

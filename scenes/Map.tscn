@@ -2,14 +2,20 @@
 
 [ext_resource type="Texture2D" uid="uid://dh038nxpajjov" path="res://Assets/Pixel Adventure 1/Free/Background/Gray.png" id="1_ylsfb"]
 [ext_resource type="Texture2D" uid="uid://dol6ncbywnp6s" path="res://Assets/Pixel Adventure 1/Free/Terrain/Terrain (16x16).png" id="2_fr5o1"]
+[ext_resource type="PackedScene" uid="uid://bvqg8xcrcydsa" path="res://Nanda/player_test.tscn" id="3_xkm8s"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_glqfo"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tm3qm"]
 texture = ExtResource("2_fr5o1")
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:0/0 = 0
+1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:0/0 = 0
+3:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:0/0 = 0
+4:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:0/0 = 0
 7:0/0 = 0
 8:0/0 = 0
@@ -23,10 +29,15 @@ texture = ExtResource("2_fr5o1")
 18:0/0 = 0
 19:0/0 = 0
 0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:1/0 = 0
+2:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 3:1/0 = 0
+3:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 4:1/0 = 0
+4:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:1/0 = 0
 7:1/0 = 0
 8:1/0 = 0
@@ -40,8 +51,11 @@ texture = ExtResource("2_fr5o1")
 18:1/0 = 0
 19:1/0 = 0
 0:2/0 = 0
+0:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 1:2/0 = 0
+1:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 2:2/0 = 0
+2:2/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 6:2/0 = 0
 7:2/0 = 0
 8:2/0 = 0
@@ -151,7 +165,8 @@ texture = ExtResource("2_fr5o1")
 20:10/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_s86w6"]
-sources/0 = SubResource("TileSetAtlasSource_glqfo")
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_tm3qm")
 
 [node name="Map" type="Node2D" unique_id=1237356937]
 
@@ -170,6 +185,9 @@ stretch_mode = 1
 
 [node name="TileMapLayer" type="TileMapLayer" parent="." unique_id=1343876030]
 texture_filter = 1
+position = Vector2(1, 0)
 scale = Vector2(3, 3)
 tile_map_data = PackedByteArray("AAAHAAoAAAABAAAAAAAIAAoAAAABAAAAAAAJAAoAAAABAAAAAAAKAAoAAAABAAAAAAALAAoAAAABAAAAAAAMAAoAAAABAAAAAAANAAoAAAABAAAAAAAOAAoAAAABAAAAAAAGAAoAAAAAAAAAAAAPAAoAAAACAAAAAAAGAAsAAAAAAAEAAAAGAAwAAAAAAAEAAAAGAA0AAAAAAAEAAAAHAAsAAAABAAEAAAAHAAwAAAABAAEAAAAIAAwAAAABAAEAAAAIAA0AAAABAAEAAAAHAA0AAAABAAEAAAAIAAsAAAABAAEAAAAJAAsAAAABAAEAAAAKAAsAAAABAAEAAAAKAAwAAAABAAEAAAAJAAwAAAABAAEAAAAJAA0AAAABAAEAAAAKAA0AAAABAAEAAAALAAwAAAABAAEAAAALAAsAAAABAAEAAAAMAAsAAAABAAEAAAAMAAwAAAABAAEAAAALAA0AAAABAAEAAAAMAA0AAAABAAEAAAANAA0AAAABAAEAAAANAAwAAAABAAEAAAANAAsAAAABAAEAAAAOAAwAAAABAAEAAAAOAA0AAAABAAEAAAAPAA0AAAACAAEAAAAPAAwAAAACAAEAAAAPAAsAAAACAAEAAAAOAAsAAAABAAEAAAA=")
 tile_set = SubResource("TileSet_s86w6")
+
+[node name="PlayerTest" parent="." unique_id=1218194307 instance=ExtResource("3_xkm8s")]
