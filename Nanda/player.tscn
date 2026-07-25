@@ -5,9 +5,14 @@
 [ext_resource type="Texture2D" uid="uid://dbohirt73f5bk" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Idle (78x58).png" id="3_n8wpo"]
 [ext_resource type="Texture2D" uid="uid://drtfiw1ny4cqc" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Jump (78x58).png" id="4_a1b1u"]
 [ext_resource type="Texture2D" uid="uid://bvd24pd2xmw7r" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Run (78x58).png" id="5_q0gof"]
+[ext_resource type="AudioStream" path="res://Assets/Hurt.mp3" id="6_hurt_sound"]
+[ext_resource type="Texture2D" uid="uid://cdq3ydgdy1dqo" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Hit (78x58).png" id="7_hit_sprite"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(28, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+size = Vector2(36, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ctc3f"]
 atlas = ExtResource("2_0b3a1")
@@ -97,6 +102,14 @@ region = Rect2(468, 0, 78, 58)
 atlas = ExtResource("5_q0gof")
 region = Rect2(546, 0, 78, 58)
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_hit0"]
+atlas = ExtResource("7_hit_sprite")
+region = Rect2(0, 0, 78, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hit1"]
+atlas = ExtResource("7_hit_sprite")
+region = Rect2(78, 0, 78, 58)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_81lj2"]
 animations = [{
 "frames": [{
@@ -150,6 +163,17 @@ animations = [{
 "loop": 1,
 "name": &"Idle",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hit0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hit1")
+}],
+"loop": false,
+"name": &"Hit",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -222,3 +246,12 @@ animation = &"Attack"
 zoom = Vector2(2, 2)
 position_smoothing_enabled = true
 script = SubResource("GDScript_dix8h")
+
+[node name="AttackHitbox" type="Area2D" parent="."]
+monitoring = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+shape = SubResource("RectangleShape2D_attack")
+
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_hurt_sound")
