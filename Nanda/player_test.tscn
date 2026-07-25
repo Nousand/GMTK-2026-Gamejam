@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://cp4uwmx7763om" path="res://Nanda/player.tscn" id="1_g4662"]
 [ext_resource type="PackedScene" uid="uid://cnwq5a2it6231" path="res://Nanda/bell.tscn" id="2_bell"]
 [ext_resource type="Script" uid="uid://bq18uu1bfbrb" path="res://Nanda/countdown_label.gd" id="3_label"]
+[ext_resource type="PackedScene" uid="uid://bwh3xo7r6ahoa" path="res://Nanda/enemy.tscn" id="4_enemy"]
+[ext_resource type="PackedScene" path="res://Nanda/lives_display.tscn" id="5_lives"]
+[ext_resource type="PackedScene" path="res://Nanda/heart_pickup.tscn" id="6_heart"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(800, 40)
@@ -21,12 +24,20 @@ offset_top = -20.0
 offset_right = 400.0
 offset_bottom = 20.0
 color = Color(0.35, 0.25, 0.15, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=1356872272 instance=ExtResource("1_g4662")]
-position = Vector2(200, 400)
+position = Vector2(541, 402)
 
 [node name="Bell" parent="." unique_id=1780509570 instance=ExtResource("2_bell")]
 position = Vector2(909, 468)
+
+[node name="Enemy" parent="." unique_id=1716795765 instance=ExtResource("4_enemy")]
+position = Vector2(700, 500)
+rotation = 0.0128378235
+
+[node name="HeartPickup" parent="." unique_id=1129707505 instance=ExtResource("6_heart")]
+position = Vector2(400, 500)
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=468796279]
 
@@ -42,3 +53,5 @@ grow_horizontal = 2
 theme_override_font_sizes/font_size = 24
 horizontal_alignment = 1
 script = ExtResource("3_label")
+
+[node name="LivesDisplay" parent="HUD" unique_id=692845187 instance=ExtResource("5_lives")]

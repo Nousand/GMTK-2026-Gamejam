@@ -1,17 +1,19 @@
 extends Area2D
 
+# the bell - hit it with the hammer and it starts a countdown, then teleports whoever rang it
+# back to the bell once time runs out. it's an Area2D (not a physics body), so it doesn't
+# physically block anything, it just detects the hammer hitbox overlapping it.
+
 # other scripts (obstacles, UI, whatever) can hook into these instead of polling the bell every frame
 signal rung(duration: float) # fires the moment the bell gets hit and the countdown starts
 signal countdown_ended() # fires the moment the countdown finishes and the player's back
 
 @export var countdown_time: float = 5.0
-@export var attack_action: String = "attack" # which input action counts as "hitting" the bell
 
 # this is basically the whole state machine - true while the countdown is running.
 # anything that needs to know if the bell is "live" can just check this directly.
 var is_timer_active: bool = false
 
-var _player_in_range: CharacterBody2D = null # whoever is standing close enough to ring it
 var _rung_player: CharacterBody2D = null # whoever actually rang it, so we know who to teleport back
 var _aura_tween: Tween = null # keeping a handle on this so we can cancel the pulse loop later
 
@@ -22,16 +24,16 @@ var _aura_tween: Tween = null # keeping a handle on this so we can cancel the pu
 
 func _ready() -> void:
 	add_to_group("bell") # lets UI (or anything else) find the bell without a hardcoded scene path
+	add_to_group("hittable") # lets the player's attack hitbox find it via the shared take_hit contract
 	_timer.wait_time = countdown_time
 	_timer.one_shot = true # we restart it manually each ring, don't want it auto-looping
 	_timer.timeout.connect(_on_timer_timeout)
-	body_entered.connect(_on_body_entered)
-	body_exited.connect(_on_body_exited)
 
-func _process(_delta: float) -> void:
-	# only ring if someone's actually in range, it's not already going, and they just pressed attack
-	if _player_in_range and not is_timer_active and Input.is_action_just_pressed(attack_action):
-		ring(_player_in_range)
+# called by the player's attack hitbox when it swings into the bell - this is just the
+# "hittable" contract, so from the player's side hitting the bell looks the same as hitting
+# an enemy, it just happens to ring instead of taking damage
+func take_hit(player: CharacterBody2D) -> void:
+	ring(player)
 
 func ring(player: CharacterBody2D) -> void:
 	if is_timer_active:
@@ -67,12 +69,3 @@ func _on_timer_timeout() -> void:
 	create_tween().tween_property(_aura, "modulate:a", 0.0, 0.3)
 
 	countdown_ended.emit()
-
-func _on_body_entered(body: Node) -> void:
-	if body is CharacterBody2D:
-		_player_in_range = body
-
-func _on_body_exited(body: Node) -> void:
-	# only clear it if it's the same body leaving, don't want some other overlap wiping this out
-	if body == _player_in_range:
-		_player_in_range = null
