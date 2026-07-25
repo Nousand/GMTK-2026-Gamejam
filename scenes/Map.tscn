@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://dh038nxpajjov" path="res://Assets/Pixel Adventure 1/Free/Background/Gray.png" id="1_ylsfb"]
 [ext_resource type="Texture2D" uid="uid://dol6ncbywnp6s" path="res://Assets/Pixel Adventure 1/Free/Terrain/Terrain (16x16).png" id="2_fr5o1"]
 [ext_resource type="PackedScene" uid="uid://bvqg8xcrcydsa" path="res://Nanda/player_test.tscn" id="3_xkm8s"]
+[ext_resource type="Texture2D" uid="uid://ic1nsph2pxrq" path="res://Assets/Pixel Adventure 1/Free/Traps/Spikes/Idle.png" id="4_tm3qm"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_tm3qm"]
 texture = ExtResource("2_fr5o1")
@@ -71,6 +72,7 @@ texture = ExtResource("2_fr5o1")
 3:4/0 = 0
 4:4/0 = 0
 6:4/0 = 0
+6:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
 7:4/0 = 0
 8:4/0 = 0
 9:4/0 = 0
@@ -168,6 +170,15 @@ texture = ExtResource("2_fr5o1")
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_tm3qm")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_yyirk"]
+texture = ExtResource("4_tm3qm")
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
+
+[sub_resource type="TileSet" id="TileSet_nhciw"]
+physics_layer_0/collision_layer = 1
+sources/0 = SubResource("TileSetAtlasSource_yyirk")
+
 [node name="Map" type="Node2D" unique_id=1237356937]
 
 [node name="Background" type="TextureRect" parent="." unique_id=371848225]
@@ -191,3 +202,9 @@ tile_map_data = PackedByteArray("AAAHAAoAAAABAAAAAAAIAAoAAAABAAAAAAAJAAoAAAABAAA
 tile_set = SubResource("TileSet_s86w6")
 
 [node name="PlayerTest" parent="." unique_id=1218194307 instance=ExtResource("3_xkm8s")]
+
+[node name="Traps" type="TileMapLayer" parent="." unique_id=735699958]
+texture_filter = 1
+scale = Vector2(3, 3)
+tile_map_data = PackedByteArray("AAAKAAkAAAAAAAAAAAALAAkAAAAAAAAAAAAMAAkAAAAAAAAAAAA=")
+tile_set = SubResource("TileSet_nhciw")

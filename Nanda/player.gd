@@ -15,7 +15,13 @@ var _attack_cooldown_left: float = 0.0
 var _shake_strength: float = 0.0
 var _shake_time_left: float = 0.0
 
+var player_dead := false
+
 func _physics_process(delta: float) -> void:
+	# stop running after death
+	if player_dead:
+		return
+	
 	# always fall unless something else overrides velocity.y (like a jump)
 	velocity.y += gravity * delta
 
@@ -40,6 +46,15 @@ func _physics_process(delta: float) -> void:
 		sprite.play("Attack")
 
 	move_and_slide()
+	
+	# Checks if the player touched a spike/damage block
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider is TileMapLayer and collider.name == "Traps":
+			die()
+			break
 
 	# don't let idle/run/jump stomp the attack animation while it's still mid-swing
 	var is_attacking := _attack_cooldown_left > 0.0
@@ -64,6 +79,38 @@ func _physics_process(delta: float) -> void:
 		)
 	else:
 		camera.offset = Vector2.ZERO
+
+func die() -> void:
+	if player_dead:
+		return
+	player_dead = true
+	
+	# Freeze the camera in place
+	if camera:
+		camera.position_smoothing_enabled = false
+		camera.reparent(get_tree().current_scene, true)
+		camera.reset_smoothing()
+	
+	set_physics_process(false)
+	$CollisionShape2D.set_deferred("disabled", true)
+
+	# Do a mario like leap death effect
+	var start_pos = global_position
+	var peak_pos = start_pos + Vector2(0, -80)
+	var final_pos = start_pos + Vector2(0, 600)
+
+	var tween = create_tween().set_parallel(true)
+
+	tween.tween_property(self, "global_position:y", peak_pos.y, 0.25)\
+		 .set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.chain().tween_property(self, "global_position:y", final_pos.y, 0.6)\
+		 .set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "rotation_degrees", 360.0, 0.85)
+	tween.chain().tween_callback(on_death_complete)
+
+func on_death_complete() -> void:
+	get_tree().reload_current_scene()
+	
 
 # the bell calls this to snap the player back to it once the countdown ends
 func teleport_to(target_position: Vector2) -> void:

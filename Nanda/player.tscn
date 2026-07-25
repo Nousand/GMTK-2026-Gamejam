@@ -189,6 +189,22 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="GDScript" id="GDScript_dix8h"]
+script/source = "extends Camera2D
+
+@onready var target := $\"..\"
+
+func _ready() -> void:
+	enabled = true
+
+func _process(delta: float) -> void:
+	if is_instance_valid(target):
+		
+		if \"player_dead\" in target and target.player_dead:
+			set_process(false)
+			return
+"
+
 [node name="Player" type="CharacterBody2D" unique_id=1356872272]
 script = ExtResource("1_dix8h")
 
@@ -202,5 +218,7 @@ scale = Vector2(1.5517241, 1.5517242)
 sprite_frames = SubResource("SpriteFrames_81lj2")
 animation = &"Attack"
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=151474328]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=621599326]
 zoom = Vector2(2, 2)
+position_smoothing_enabled = true
+script = SubResource("GDScript_dix8h")
