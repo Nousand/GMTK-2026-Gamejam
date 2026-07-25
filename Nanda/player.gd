@@ -83,7 +83,13 @@ func take_hit(_attacker: Node) -> void:
 	lives_changed.emit(_lives)
 	# no screen shake here on purpose - that's reserved for the bell ringing
 
+var player_dead := false
+
 func _physics_process(delta: float) -> void:
+	# stop running after death
+	if player_dead:
+		return
+	
 	if _invincible_left > 0.0:
 		_invincible_left = max(_invincible_left - delta, 0.0)
 
@@ -126,6 +132,15 @@ func _physics_process(delta: float) -> void:
 		_hurt_anim_time_left = max(_hurt_anim_time_left - delta, 0.0)
 
 	move_and_slide()
+	
+	# Checks if the player touched a spike/damage block
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		var collider = collision.get_collider()
+		
+		if collider is TileMapLayer and collider.name == "Traps":
+			die()
+			break
 
 	# don't let idle/run/jump stomp the attack or hurt animations while they're still playing
 	var is_attacking := _attack_cooldown_left > 0.0
@@ -159,6 +174,37 @@ func _physics_process(delta: float) -> void:
 	else:
 		camera.offset = Vector2.ZERO
 
+func die() -> void:
+	if player_dead:
+		return
+	player_dead = true
+	
+	# Freeze the camera in place
+	if camera:
+		camera.position_smoothing_enabled = false
+		camera.reparent(get_tree().current_scene, true)
+		camera.reset_smoothing()
+	
+	set_physics_process(false)
+	$CollisionShape2D.set_deferred("disabled", true)
+
+	# Do a mario like leap death effect
+	var start_pos = global_position
+	var peak_pos = start_pos + Vector2(0, -80)
+	var final_pos = start_pos + Vector2(0, 600)
+
+	var tween = create_tween().set_parallel(true)
+
+	tween.tween_property(self, "global_position:y", peak_pos.y, 0.25)\
+		 .set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.chain().tween_property(self, "global_position:y", final_pos.y, 0.6)\
+		 .set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_IN)
+	tween.tween_property(self, "rotation_degrees", 360.0, 0.85)
+	tween.chain().tween_callback(on_death_complete)
+
+func on_death_complete() -> void:
+	get_tree().reload_current_scene()
+	
 func _trigger_attack_hitbox() -> void:
 	# put the hitbox on whichever side we're facing - flip_h true = facing left = negative x
 	var facing := -1.0 if sprite.flip_h else 1.0
