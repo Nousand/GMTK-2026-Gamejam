@@ -7,24 +7,7 @@
 [ext_resource type="PackedScene" path="res://Nanda/lives_display.tscn" id="5_lives"]
 [ext_resource type="PackedScene" path="res://Nanda/heart_pickup.tscn" id="6_heart"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
-size = Vector2(800, 40)
-
 [node name="PlayerTest" type="Node2D" unique_id=1218194307]
-
-[node name="Floor" type="StaticBody2D" parent="." unique_id=1140487644]
-position = Vector2(576, 550)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1529189812]
-shape = SubResource("RectangleShape2D_floor")
-
-[node name="Visual" type="ColorRect" parent="Floor" unique_id=1127992681]
-offset_left = -400.0
-offset_top = -20.0
-offset_right = 400.0
-offset_bottom = 20.0
-color = Color(0.35, 0.25, 0.15, 1)
-metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." unique_id=1356872272 instance=ExtResource("1_g4662")]
 position = Vector2(541, 402)
