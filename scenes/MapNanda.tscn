@@ -273,7 +273,7 @@ tile_set = SubResource("TileSet_nhciw")
 
 [node name="Player" parent="." unique_id=988507716 instance=ExtResource("3_xkm8s")]
 z_index = 9
-position = Vector2(199, 439)
+position = Vector2(1501, 586)
 
 [node name="Bell" parent="." unique_id=1138671602 instance=ExtResource("5_bell")]
 z_index = 1
@@ -288,6 +288,11 @@ position = Vector2(1711, 625)
 
 [node name="SpikedBall" parent="." unique_id=1336545274 instance=ExtResource("11_spikedball")]
 position = Vector2(1829, 491)
+
+[node name="Bell2" parent="." unique_id=384589248 instance=ExtResource("5_bell")]
+z_index = 1
+position = Vector2(1601, 563)
+countdown_time = 10.0
 
 [node name="HUD" type="CanvasLayer" parent="." unique_id=1274342643]
 
