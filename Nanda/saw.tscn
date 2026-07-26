@@ -1,0 +1,87 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://Nanda/saw.gd" id="1"]
+[ext_resource type="Script" path="res://Nanda/hazard.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://iuqb3coj866o" path="res://Assets/Pixel Adventure 1/Free/Traps/Saw/On (38x38).png" id="3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_saw"]
+radius = 15.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw0"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw1"]
+atlas = ExtResource("3")
+region = Rect2(38, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw2"]
+atlas = ExtResource("3")
+region = Rect2(76, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw3"]
+atlas = ExtResource("3")
+region = Rect2(114, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw4"]
+atlas = ExtResource("3")
+region = Rect2(152, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw5"]
+atlas = ExtResource("3")
+region = Rect2(190, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw6"]
+atlas = ExtResource("3")
+region = Rect2(228, 0, 38, 38)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_saw7"]
+atlas = ExtResource("3")
+region = Rect2(266, 0, 38, 38)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_saw"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw5")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_saw7")
+}],
+"loop": true,
+"name": &"spin",
+"speed": 16.0
+}]
+
+[node name="Saw" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Blade" type="Area2D" parent="."]
+z_index = 1
+script = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blade"]
+shape = SubResource("CircleShape2D_saw")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Blade"]
+sprite_frames = SubResource("SpriteFrames_saw")
+animation = &"spin"
+autoplay = "spin"

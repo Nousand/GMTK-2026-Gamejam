@@ -1,0 +1,34 @@
+[gd_scene format=3 uid="uid://bnyi2jpvea7ij"]
+
+[ext_resource type="Script" uid="uid://dpd486fqfdmi1" path="res://Nanda/spiked_ball.gd" id="1"]
+[ext_resource type="Script" uid="uid://b4ei1mg82u3wn" path="res://Nanda/hazard.gd" id="2"]
+[ext_resource type="Texture2D" uid="uid://pvglrw3trk2x" path="res://Assets/Pixel Adventure 1/Free/Traps/Spiked Ball/Chain.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://c0nritfmhkccx" path="res://Assets/Pixel Adventure 1/Free/Traps/Spiked Ball/Spiked Ball.png" id="4"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ball"]
+radius = 16.0
+
+[node name="SpikedBall" type="Node2D" unique_id=506895120]
+script = ExtResource("1")
+
+[node name="Chain1" type="Sprite2D" parent="." unique_id=1876623762]
+position = Vector2(0, 16)
+texture = ExtResource("3")
+
+[node name="Chain2" type="Sprite2D" parent="." unique_id=1740897990]
+position = Vector2(0, 32)
+texture = ExtResource("3")
+
+[node name="Chain3" type="Sprite2D" parent="." unique_id=1057303780]
+position = Vector2(0, 48)
+texture = ExtResource("3")
+
+[node name="Ball" type="Area2D" parent="." unique_id=954910734]
+position = Vector2(0, 64)
+script = ExtResource("2")
+
+[node name="Sprite2D" type="Sprite2D" parent="Ball" unique_id=1271563995]
+texture = ExtResource("4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball" unique_id=1581348168]
+shape = SubResource("CircleShape2D_ball")
