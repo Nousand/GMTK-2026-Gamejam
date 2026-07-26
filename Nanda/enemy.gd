@@ -85,6 +85,15 @@ func _physics_process(delta: float) -> void:
 
 	move_and_slide()
 
+	# same spike-death check as the player (see player.gd) - touching the "Traps" tile layer
+	# is an instant kill, spikes don't discriminate between player and pig
+	for i in get_slide_collision_count():
+		var collision := get_slide_collision(i)
+		var collider := collision.get_collider()
+		if collider is TileMapLayer and collider.name == "Traps":
+			_die()
+			break
+
 # only jump if the player actually exists, we're not still cooling down from the last jump,
 # and we're standing on solid ground (don't want it triggering a jump attack mid-air)
 func _should_start_attack() -> bool:
