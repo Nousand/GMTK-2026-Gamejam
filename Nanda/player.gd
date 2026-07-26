@@ -175,7 +175,7 @@ func _physics_process(delta: float) -> void:
 		camera.offset = Vector2.ZERO
 		
 	# Die if below 800
-	if global_position.y > 1000:
+	if global_position.y > 2000:
 		die()
 
 func die() -> void:
