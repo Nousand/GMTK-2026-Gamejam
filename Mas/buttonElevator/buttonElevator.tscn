@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cv1ikqu1prccm"]
+
+[ext_resource type="Script" uid="uid://dip6h0j2w7wfa" path="res://Mas/buttonElevator/button_elevator.gd" id="1_5c0mw"]
+[ext_resource type="Texture2D" uid="uid://dol6ncbywnp6s" path="res://Assets/Pixel Adventure 1/Free/Terrain/Terrain (16x16).png" id="2_ho20n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ep1be"]
+size = Vector2(48, 16)
+
+[node name="buttonElevator" type="AnimatableBody2D" unique_id=15608452]
+script = ExtResource("1_5c0mw")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=742218155]
+shape = SubResource("RectangleShape2D_ep1be")
+one_way_collision = true
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1694898868]
+texture = ExtResource("2_ho20n")
+region_enabled = true
+region_rect = Rect2(192.0123, 63.975494, 47.95381, 15.974052)
