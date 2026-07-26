@@ -10,8 +10,9 @@ extends Node2D
 @onready var _blade: Area2D = $Blade
 
 func _ready() -> void:
+	modulate.a = 1.0
 	var retreat_offset := Vector2(0, -dip_depth if mounted_on_ceiling else dip_depth)
-	var visible_start := position
+	var visible_start := global_position
 	var visible_end := visible_start + Vector2(travel_distance, 0)
 	var hidden_end := visible_end + retreat_offset
 	var hidden_start := visible_start + retreat_offset
@@ -19,17 +20,17 @@ func _ready() -> void:
 	var loop := create_tween()
 	loop.set_loops()
 
-	loop.tween_property(self, "position", visible_end, travel_time) # visible run across the track
+	loop.tween_property(self, "global_position", visible_end, travel_time) # visible run across the track
 
-	loop.tween_property(self, "position", hidden_end, dip_time) # retreat...
+	loop.tween_property(self, "global_position", hidden_end, dip_time) # retreat...
 	loop.parallel().tween_property(self, "modulate:a", 0.0, dip_time) # ...fading out as it goes
 	loop.tween_callback(_set_hidden.bind(true))
 
-	loop.tween_property(self, "position", hidden_start, travel_time) # travel back, hidden
+	loop.tween_property(self, "global_position", hidden_start, travel_time) # travel back, hidden
 	loop.tween_interval(hidden_pause) # wait hidden before re-emerging
 
 	loop.tween_callback(_set_hidden.bind(false))
-	loop.tween_property(self, "position", visible_start, dip_time) # re-emerge...
+	loop.tween_property(self, "global_position", visible_start, dip_time) # re-emerge...
 	loop.parallel().tween_property(self, "modulate:a", 1.0, dip_time) # ...fading back in
 
 # hidden = tucked away in the floor/ceiling: harmless, so it can't hit the player through it

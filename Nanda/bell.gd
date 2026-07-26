@@ -9,6 +9,7 @@ signal rung(duration: float) # fires the moment the bell gets hit and the countd
 signal countdown_ended() # fires the moment the countdown finishes and the player's back
 
 @export var countdown_time: float = 90.0
+@export var countdown_label: Label
 
 # this is basically the whole state machine - true while the countdown is running.
 # anything that needs to know if the bell is "live" can just check this directly.
@@ -16,6 +17,7 @@ var is_timer_active: bool = false
 
 var _rung_player: CharacterBody2D = null # whoever actually rang it, so we know who to teleport back
 var _aura_tween: Tween = null # keeping a handle on this so we can cancel the pulse loop later
+
 
 @onready var _timer: Timer = $CountdownTimer
 @onready var _ring_sound: AudioStreamPlayer2D = $RingSound
@@ -28,6 +30,14 @@ func _ready() -> void:
 	_timer.wait_time = countdown_time
 	_timer.one_shot = true # we restart it manually each ring, don't want it auto-looping
 	_timer.timeout.connect(_on_timer_timeout)
+	
+	if countdown_label:
+		countdown_label.visible = false
+		
+func _process(_delta: float) -> void:
+	if is_timer_active and countdown_label:
+		var time_left: float = get_time_left()
+		countdown_label.text = "%.1f" % _timer.get_time_left()
 
 # called by the player's attack hitbox when it swings into the bell - this is just the
 # "hittable" contract, so from the player's side hitting the bell looks the same as hitting
@@ -45,6 +55,9 @@ func ring(player: CharacterBody2D) -> void:
 	_ring_sound.play()
 	_swing.play("swing")
 	player.shake_camera()
+	
+	if countdown_label:
+		countdown_label.visible = true
 
 	# fade the purple glow in, then keep it pulsing like a heartbeat for as long as it's active
 	_aura_tween = create_tween()
@@ -62,6 +75,9 @@ func _on_timer_timeout() -> void:
 	is_timer_active = false
 	if _rung_player:
 		_rung_player.teleport_to(global_position) # only the player moves, world state stays put
+
+	if countdown_label:
+		countdown_label.visible = false
 
 	# kill the heartbeat loop before starting the fade out, otherwise they'd fight over the alpha
 	if _aura_tween:

@@ -5,14 +5,12 @@
 [ext_resource type="Texture2D" uid="uid://dbohirt73f5bk" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Idle (78x58).png" id="3_n8wpo"]
 [ext_resource type="Texture2D" uid="uid://drtfiw1ny4cqc" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Jump (78x58).png" id="4_a1b1u"]
 [ext_resource type="Texture2D" uid="uid://bvd24pd2xmw7r" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Run (78x58).png" id="5_q0gof"]
-[ext_resource type="AudioStream" path="res://Assets/Hurt.mp3" id="6_hurt_sound"]
+[ext_resource type="AudioStream" uid="uid://00fb47eirawd" path="res://Assets/Hurt.mp3" id="6_hurt_sound"]
 [ext_resource type="Texture2D" uid="uid://cdq3ydgdy1dqo" path="res://Assets/Kings and Pigs/Sprites/01-King Human/Hit (78x58).png" id="7_hit_sprite"]
+[ext_resource type="AudioStream" uid="uid://qk03yubt441b" path="res://Assets/hit.wav" id="8_a1b1u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_player"]
 size = Vector2(28, 37)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
-size = Vector2(36, 30)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ctc3f"]
 atlas = ExtResource("2_0b3a1")
@@ -25,6 +23,14 @@ region = Rect2(78, 0, 78, 58)
 [sub_resource type="AtlasTexture" id="AtlasTexture_j7vfm"]
 atlas = ExtResource("2_0b3a1")
 region = Rect2(156, 0, 78, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hit0"]
+atlas = ExtResource("7_hit_sprite")
+region = Rect2(0, 0, 78, 58)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hit1"]
+atlas = ExtResource("7_hit_sprite")
+region = Rect2(78, 0, 78, 58)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_j2778"]
 atlas = ExtResource("3_n8wpo")
@@ -102,14 +108,6 @@ region = Rect2(468, 0, 78, 58)
 atlas = ExtResource("5_q0gof")
 region = Rect2(546, 0, 78, 58)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hit0"]
-atlas = ExtResource("7_hit_sprite")
-region = Rect2(0, 0, 78, 58)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hit1"]
-atlas = ExtResource("7_hit_sprite")
-region = Rect2(78, 0, 78, 58)
-
 [sub_resource type="SpriteFrames" id="SpriteFrames_81lj2"]
 animations = [{
 "frames": [{
@@ -125,6 +123,17 @@ animations = [{
 "loop": 1,
 "name": &"Attack",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hit0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hit1")
+}],
+"loop": 0,
+"name": &"Hit",
+"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -163,17 +172,6 @@ animations = [{
 "loop": 1,
 "name": &"Idle",
 "speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hit0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hit1")
-}],
-"loop": false,
-"name": &"Hit",
-"speed": 8.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -229,6 +227,9 @@ func _process(delta: float) -> void:
 			return
 "
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_attack"]
+size = Vector2(36, 30)
+
 [node name="Player" type="CharacterBody2D" unique_id=1356872272]
 safe_margin = 0.001
 script = ExtResource("1_dix8h")
@@ -249,11 +250,14 @@ position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 script = SubResource("GDScript_dix8h")
 
-[node name="AttackHitbox" type="Area2D" parent="."]
+[node name="AttackHitbox" type="Area2D" parent="." unique_id=197589678]
 monitoring = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackHitbox" unique_id=1454297667]
 shape = SubResource("RectangleShape2D_attack")
 
-[node name="HurtSound" type="AudioStreamPlayer2D" parent="."]
+[node name="HurtSound" type="AudioStreamPlayer2D" parent="." unique_id=435503699]
 stream = ExtResource("6_hurt_sound")
+
+[node name="Hit" type="AudioStreamPlayer2D" parent="." unique_id=1945853985]
+stream = ExtResource("8_a1b1u")

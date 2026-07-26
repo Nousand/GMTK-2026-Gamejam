@@ -7,13 +7,13 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
 size = Vector2(60, 80)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_stand"]
-atlas = ExtResource("3")
-region = Rect2(6, 65, 116, 127)
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_aura"]
 atlas = ExtResource("3")
 region = Rect2(133, 59, 118, 133)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_stand"]
+atlas = ExtResource("3")
+region = Rect2(6, 65, 116, 127)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bell"]
 atlas = ExtResource("3")
@@ -63,7 +63,7 @@ script = ExtResource("1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=299060091]
 shape = SubResource("RectangleShape2D_trigger")
 
-[node name="Aura" type="Sprite2D" parent="." unique_id=3921004411]
+[node name="Aura" type="Sprite2D" parent="." unique_id=-373962885]
 modulate = Color(1, 1, 1, 0)
 texture = SubResource("AtlasTexture_aura")
 
@@ -72,6 +72,7 @@ texture = SubResource("AtlasTexture_stand")
 
 [node name="BellSprite" type="Sprite2D" parent="." unique_id=1484701166]
 position = Vector2(0, -48)
+rotation = 0.43633232
 texture = SubResource("AtlasTexture_bell")
 offset = Vector2(0, 14)
 
