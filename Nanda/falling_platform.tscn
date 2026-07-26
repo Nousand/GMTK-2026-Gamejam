@@ -1,0 +1,116 @@
+[gd_scene format=3 uid="uid://bqv8cttxsxc2s"]
+
+[ext_resource type="Texture2D" uid="uid://dpltds7ygynkv" path="res://Assets/Pixel Adventure 1/Free/Traps/Falling Platforms/Off.png" id="2"]
+[ext_resource type="Texture2D" uid="uid://c2qu8it8r0gch" path="res://Assets/Pixel Adventure 1/Free/Traps/Falling Platforms/On (32x10).png" id="3"]
+
+[sub_resource type="GDScript" id="GDScript_3bnor"]
+script/source = "extends StaticBody2D
+
+# a platform that gives way once the player stands on it - shakes for a moment as a warning,
+# then drops out (collision disabled, sprite hidden) so they fall through. can either respawn
+# after a delay (for a repeatable trap) or stay gone for good (for a one-way route you're not
+# meant to climb back up through).
+
+@export var shake_time: float = 0.5 # warning delay between stepping on it and it giving way
+@export var respawns: bool = true # false = gone for good the first time it drops
+@export var respawn_delay: float = 2.0 # how long it stays gone before resetting, if it respawns
+
+@onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _collision: CollisionShape2D = $CollisionShape2D
+@onready var _trigger: Area2D = $TriggerArea
+
+var _triggered: bool = false
+
+func _ready() -> void:
+	_trigger.body_entered.connect(_on_trigger_body_entered)
+
+func _on_trigger_body_entered(body: Node) -> void:
+	if _triggered or not body.is_in_group(\"player\"):
+		return
+	_triggered = true
+	_sprite.play(\"shake\")
+	get_tree().create_timer(shake_time).timeout.connect(_fall)
+
+func _fall() -> void:
+	_collision.set_deferred(\"disabled\", true)
+	_trigger.set_deferred(\"monitoring\", false)
+	_sprite.visible = false
+
+	if respawns:
+		get_tree().create_timer(respawn_delay).timeout.connect(_reset)
+
+func _reset() -> void:
+	_triggered = false
+	_collision.set_deferred(\"disabled\", false)
+	_trigger.monitoring = true
+	_sprite.visible = true
+	_sprite.play(\"idle\")
+"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_platform"]
+size = Vector2(48, 15)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shake0"]
+atlas = ExtResource("3")
+region = Rect2(0, 0, 32, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shake1"]
+atlas = ExtResource("3")
+region = Rect2(32, 0, 32, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shake2"]
+atlas = ExtResource("3")
+region = Rect2(64, 0, 32, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shake3"]
+atlas = ExtResource("3")
+region = Rect2(96, 0, 32, 10)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_platform"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shake0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shake1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shake2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shake3")
+}],
+"loop": 1,
+"name": &"shake",
+"speed": 12.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_trigger"]
+size = Vector2(48, 6)
+
+[node name="FallingPlatform" type="StaticBody2D" unique_id=1932081223]
+script = SubResource("GDScript_3bnor")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1991822275]
+shape = SubResource("RectangleShape2D_platform")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1422906319]
+scale = Vector2(1.5, 1.5)
+sprite_frames = SubResource("SpriteFrames_platform")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="TriggerArea" type="Area2D" parent="." unique_id=1409319791]
+position = Vector2(0, -9)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TriggerArea" unique_id=1202602138]
+shape = SubResource("RectangleShape2D_trigger")

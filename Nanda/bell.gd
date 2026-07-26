@@ -8,7 +8,7 @@ extends Area2D
 signal rung(duration: float) # fires the moment the bell gets hit and the countdown starts
 signal countdown_ended() # fires the moment the countdown finishes and the player's back
 
-@export var countdown_time: float = 5.0
+@export var countdown_time: float = 30.0
 
 # this is basically the whole state machine - true while the countdown is running.
 # anything that needs to know if the bell is "live" can just check this directly.
