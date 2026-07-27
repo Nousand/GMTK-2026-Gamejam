@@ -33,6 +33,8 @@ signal lives_changed(lives: int) # fires whenever the life count changes (lose a
 @onready var attack_hitbox: Area2D = $AttackHitbox
 @onready var hurt_sound: AudioStreamPlayer2D = $HurtSound
 
+@onready var new_hit_sound: AudioStreamPlayer2D = $Hit
+
 var _attack_cooldown_left: float = 0.0
 var _hitbox_time_left: float = 0.0
 var _shake_strength: float = 0.0
@@ -82,6 +84,9 @@ func take_hit(_attacker: Node) -> void:
 	hurt_sound.play()
 	lives_changed.emit(_lives)
 	# no screen shake here on purpose - that's reserved for the bell ringing
+	
+	if get_lives() <= 0:
+		die()
 
 var player_dead := false
 
